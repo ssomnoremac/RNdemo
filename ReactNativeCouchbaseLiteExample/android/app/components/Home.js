@@ -1,31 +1,20 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
+
 'use strict';
 
 var React = require('react-native');
+
 var {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  Image,
   ListView,
-  } = React;
+  Image
+} = React;
 
-var ReactCBLite = require('react-native').NativeModules.ReactCBLite;
+
+import {manager, ReactCBLite} from 'react-native-couchbase-lite'
 ReactCBLite.init(5984, 'admin', 'password');
 
-var { manager } = require('react-native-couchbase-lite');
-
-var ReactNativeCouchbaseLiteExample = React.createClass({
-  render: function () {
-    return (
-      <Home></Home>
-    );
-  }
-});
 
 var Home = React.createClass({
   getInitialState() {
@@ -36,11 +25,12 @@ var Home = React.createClass({
     }
   },
   componentDidMount() {
+    
     var database = new manager('http://admin:password@localhost:5984/', 'myapp');
 
     database.createDatabase()
       .then((res) => {
-        database.replicate('http://localhost:4984/moviesapp', 'myapp')
+        database.replicate('http://localhost:4984/demoapp', 'myapp')
       })
       .then((res) => {
         return database.getAllDocuments()
@@ -54,32 +44,35 @@ var Home = React.createClass({
       .catch((ex) => {
         console.log(ex)
       })
+
+  
   },
   render() {
     return (
-      <View>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderMovie}
-          style={styles.listView}/>
-      </View>
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderBookList}
+        style={styles.listView}/>
     )
   },
-  renderMovie(movie) {
-    var movie = movie.doc;
+  renderBookList(book) {
+    var book = book.doc;
+    var thumbnailPath = require('../img/' + book.posters.thumbnail)
+    var icon = this.props.active ? require('./my-icon-active.png') : require('./my-icon-inactive.png');
     return (
       <View style={styles.container}>
-        <Image
-          source={{uri: movie.posters.thumbnail}}
-          style={styles.thumbnail}/>
+        <Image 
+          source={thumbnailPath} 
+          style={styles.thumbnail} />
         <View style={styles.rightContainer}>
-          <Text style={styles.title}>{movie.title}</Text>
-          <Text style={styles.year}>{movie.year}</Text>
+          <Text style={styles.title}>{book.title}</Text>
+          <Text style={styles.year}>{book.year}</Text>
         </View>
       </View>
     );
   }
 });
+
 
 var styles = StyleSheet.create({
   container: {
@@ -105,9 +98,9 @@ var styles = StyleSheet.create({
     height: 81,
   },
   listView: {
-    paddingTop: 20,
+    flex: 1,
     backgroundColor: '#F5FCFF',
   },
 });
 
-AppRegistry.registerComponent('ReactNativeCouchbaseLiteExample', () => ReactNativeCouchbaseLiteExample);
+module.exports = Home;

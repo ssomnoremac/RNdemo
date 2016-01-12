@@ -1,7 +1,7 @@
 {
   "log": ["*"],
   "databases": {
-    "moviesapp": {
+    "demoapp": {
       "users": {
         "GUEST": {"disabled": false, "admin_channels": ["*"]}
       }

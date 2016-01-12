@@ -57,12 +57,11 @@ var Home = React.createClass({
   },
   renderBookList(book) {
     var book = book.doc;
-    var thumbnailPath = require('../img/' + book.posters.thumbnail)
-    var icon = this.props.active ? require('./my-icon-active.png') : require('./my-icon-inactive.png');
+    var thumbnail = '../img/' + book.posters.thumbnail;
     return (
       <View style={styles.container}>
         <Image 
-          source={thumbnailPath} 
+          source={{uri: thumbnail}} 
           style={styles.thumbnail} />
         <View style={styles.rightContainer}>
           <Text style={styles.title}>{book.title}</Text>

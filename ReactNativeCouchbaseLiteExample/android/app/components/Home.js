@@ -11,26 +11,26 @@ var {
   Image
 } = React;
 
-
 import {manager, ReactCBLite} from 'react-native-couchbase-lite'
 ReactCBLite.init(5984, 'admin', 'password');
 
+var CatalogCell = require('CatalogCell');
 
 var Home = React.createClass({
   getInitialState() {
     return {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
-      })
-    }
+      }),
+    };
   },
   componentDidMount() {
     
-    var database = new manager('http://admin:password@localhost:5984/', 'myapp');
+    var database = new manager('http://admin:password@localhost:5984/', 'demoapp');
 
     database.createDatabase()
       .then((res) => {
-        database.replicate('http://localhost:4984/demoapp', 'myapp')
+        database.replicate('http://localhost:4984/demoapp', 'demoapp')
       })
       .then((res) => {
         return database.getAllDocuments()
@@ -41,60 +41,41 @@ var Home = React.createClass({
         });
         console.log(res.rows)
       })
-      .catch((ex) => {
+      .catch((ex) => {file:///android_asset/
         console.log(ex)
       })
-
-  
+  },
+  selectBook(book) {
+    // fix for iOS/Android dismiss keyboard needs to be added
+    this.props.navigator.push({
+      title: book.title,
+      name: 'book',
+      book: book,
+    });
+  }
+  renderRow(book) {
+    var book = book.doc;
+    return (
+      <CatalogCell
+        onSelect={() => this.selectBook(book)}
+        book={book}
+        style={styles.catalogCell} />
+    );
   },
   render() {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={this.renderBookList}
-        style={styles.listView}/>
+        renderRow={this.renderRow}
+        style={styles.listView} />
     )
   },
-  renderBookList(book) {
-    var book = book.doc;
-    var thumbnail = '../img/' + book.posters.thumbnail;
-    return (
-      <View style={styles.container}>
-        <Image 
-          source={{uri: thumbnail}} 
-          style={styles.thumbnail} />
-        <View style={styles.rightContainer}>
-          <Text style={styles.title}>{book.title}</Text>
-          <Text style={styles.year}>{book.year}</Text>
-        </View>
-      </View>
-    );
-  }
 });
 
 
 var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  rightContainer: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 20,
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  year: {
-    textAlign: 'center',
-  },
-  thumbnail: {
-    width: 53,
-    height: 81,
+  catalogCell: {
+    flex: 1
   },
   listView: {
     flex: 1,

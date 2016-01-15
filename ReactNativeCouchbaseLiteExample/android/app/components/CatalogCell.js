@@ -19,13 +19,16 @@ var CatalogCell = React.createClass({
     if (Platform.OS === 'android') {
       TouchableElement = TouchableNativeFeedback;
     }
+    // want to replace this with URI for local database   'http://localhost:5984/demoapp'   ... + this.props.book.thumbnail
+    var imageURI = 'http://api.libraryforall.org:5984/images/' + this.props.book._id + '/thumbnail.jpg';
+    console.log(imageURI);
     return (
     	<View>
 	      <TouchableElement
 	        onPress={this.props.onSelect}>
 		      <View style={styles.container}>
 		        <Image 
-		          source={{uri:'http://127.0.0.1:5984/demoapp/cb96ef7523e03e8303c75d7eb93d65c4/pic100.jpg'}} 
+		          source={{uri: imageURI}} 
 		          style={styles.thumbnail} />
 		        <View style={styles.rightContainer}>
 		          <Text style={styles.title}>{this.props.book.title}</Text>

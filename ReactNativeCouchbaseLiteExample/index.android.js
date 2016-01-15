@@ -6,6 +6,7 @@
 
 var React = require('react-native');
 var Home = require('./android/app/components/Home');
+var Reader = require('./android/app/components/Reader');
 var {
   AppRegistry,
   BackAndroid,
@@ -61,6 +62,17 @@ var ReactNativeCouchbaseLiteExample = React.createClass({
         renderScene={RouteMapper} />
     );
   }
+});
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  toolbar: {
+    backgroundColor: '#a9a9a9',
+    height: 56,
+  },
 });
 
 AppRegistry.registerComponent('ReactNativeCouchbaseLiteExample', () => ReactNativeCouchbaseLiteExample);

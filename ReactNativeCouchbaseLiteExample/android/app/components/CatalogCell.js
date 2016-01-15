@@ -28,8 +28,8 @@ var CatalogCell = React.createClass({
 		          source={{uri:'http://127.0.0.1:5984/demoapp/cb96ef7523e03e8303c75d7eb93d65c4/pic100.jpg'}} 
 		          style={styles.thumbnail} />
 		        <View style={styles.rightContainer}>
-		          <Text style={styles.title}>{book.title}</Text>
-		          <Text style={styles.year}>{book.year}</Text>
+		          <Text style={styles.title}>{this.props.book.title}</Text>
+		          <Text style={styles.year}>{this.props.book.year}</Text>
 		        </View>
 		      </View>
 		    </TouchableElement>

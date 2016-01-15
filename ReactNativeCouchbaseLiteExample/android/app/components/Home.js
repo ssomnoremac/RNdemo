@@ -14,8 +14,7 @@ var {
 import {manager, ReactCBLite} from 'react-native-couchbase-lite'
 ReactCBLite.init(5984, 'admin', 'password');
 
-var CatalogCell = require('CatalogCell');
-
+var CatalogCell = require('./CatalogCell');
 var Home = React.createClass({
   getInitialState() {
     return {
@@ -27,7 +26,6 @@ var Home = React.createClass({
   componentDidMount() {
     
     var database = new manager('http://admin:password@localhost:5984/', 'demoapp');
-
     database.createDatabase()
       .then((res) => {
         database.replicate('http://localhost:4984/demoapp', 'demoapp')
@@ -49,14 +47,15 @@ var Home = React.createClass({
     // fix for iOS/Android dismiss keyboard needs to be added
     this.props.navigator.push({
       title: book.title,
-      name: 'book',
+      name: 'reader',
       book: book,
     });
-  }
-  renderRow(book) {
-    var book = book.doc;
+  },
+  renderRow(data) {
+    var book = data.doc
     return (
       <CatalogCell
+        key= {book.id}
         onSelect={() => this.selectBook(book)}
         book={book}
         style={styles.catalogCell} />

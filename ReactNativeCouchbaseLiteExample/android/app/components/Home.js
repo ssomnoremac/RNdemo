@@ -28,7 +28,7 @@ var Home = React.createClass({
     var database = new manager('http://admin:password@localhost:5984/', 'demoapp');
     database.createDatabase()
       .then((res) => {
-        database.replicate('http://localhost:4984/demoapp', 'demoapp')
+        database.replicate('https://ssomnoremac.cloudant.com/demoapp', 'demoapp')
       })
       .then((res) => {
         return database.getAllDocuments()

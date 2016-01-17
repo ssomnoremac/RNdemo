@@ -14,7 +14,7 @@ var {
 var Reader = React.createClass({
   render: function() {
     // want to replace this with URI for local database   'http://localhost:5984/demoapp'   ... + this.props.book.thumbnail
-    var imageURI = 'http://api.libraryforall.org:5984/images/' + this.props.book._id + '/thumbnail.jpg';
+    var imageURI = 'https://raw.githubusercontent.com/' + this.props.full_name + '/master/cover.jpg';
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.mainSection}>
@@ -22,8 +22,7 @@ var Reader = React.createClass({
             * omit a property or set it to undefined if it's inside a shape,
             * even if it isn't required */}
           <View style={styles.rightPane}>
-            <Text style={styles.movieTitle}>{this.props.book.title}</Text>
-            <Text>{this.props.book.year}</Text>
+            <Text style={styles.movieTitle}>{this.props.book.name}</Text>
             <Image 
               source={{uri: imageURI}} 
               style={styles.thumbnail} />

@@ -24,11 +24,11 @@ var Home = React.createClass({
     };
   },
   componentDidMount() {
-    
+    var remoteURL = 'https://infinitelibrary.cloudant.com/gitburg'
     var database = new manager('http://admin:password@localhost:5984/', 'demoapp');
     database.createDatabase()
       .then((res) => {
-        database.replicate('https://ssomnoremac.cloudant.com/demoapp', 'demoapp')
+        database.replicate(remoteURL, 'demoapp')
       })
       .then((res) => {
         return database.getAllDocuments()

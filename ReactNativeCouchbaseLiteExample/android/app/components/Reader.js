@@ -13,6 +13,8 @@ var {
 
 var Reader = React.createClass({
   render: function() {
+    // want to replace this with URI for local database   'http://localhost:5984/demoapp'   ... + this.props.book.thumbnail
+    var imageURI = 'http://api.libraryforall.org:5984/images/' + this.props.book._id + '/thumbnail.jpg';
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.mainSection}>
@@ -22,6 +24,9 @@ var Reader = React.createClass({
           <View style={styles.rightPane}>
             <Text style={styles.movieTitle}>{this.props.book.title}</Text>
             <Text>{this.props.book.year}</Text>
+            <Image 
+              source={{uri: imageURI}} 
+              style={styles.thumbnail} />
           </View>
         </View>
       </ScrollView>
@@ -36,7 +41,8 @@ var styles = StyleSheet.create({
     padding: 10,
   },
   rightPane: {
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 1,
   },
   movieTitle: {
@@ -47,46 +53,15 @@ var styles = StyleSheet.create({
   rating: {
     marginTop: 10,
   },
-  ratingTitle: {
-    fontSize: 14,
-  },
-  ratingValue: {
-    fontSize: 28,
-    fontWeight: '500',
-  },
-  mpaaWrapper: {
-    alignSelf: 'flex-start',
-    borderColor: 'black',
-    borderWidth: 1,
-    paddingHorizontal: 3,
-    marginVertical: 5,
-  },
-  mpaaText: {
-    fontFamily: 'Palatino',
-    fontSize: 13,
-    fontWeight: '500',
-  },
   mainSection: {
     flexDirection: 'row',
   },
-  detailsImage: {
+  thumbnail: {
     width: 134,
     height: 200,
     backgroundColor: '#eaeaea',
     marginRight: 10,
-  },
-  separator: {
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    height: 1 / PixelRatio.get(),
-    marginVertical: 10,
-  },
-  castTitle: {
-    fontWeight: '500',
-    marginBottom: 3,
-  },
-  castActor: {
-    marginLeft: 2,
-  },
+  }
 });
 
 module.exports = Reader;

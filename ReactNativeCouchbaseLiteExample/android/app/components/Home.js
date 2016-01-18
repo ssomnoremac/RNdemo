@@ -2,6 +2,7 @@
 'use strict';
 
 var React = require('react-native');
+var SearchBar = require('./SearchBar')
 
 var {
   StyleSheet,
@@ -18,17 +19,18 @@ var CatalogCell = require('./CatalogCell');
 var Home = React.createClass({
   getInitialState() {
     return {
+      isLoading: false,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
     };
   },
   componentDidMount() {
-    
+
     var database = new manager('http://admin:password@localhost:5984/', 'demoapp');
     database.createDatabase()
       .then((res) => {
-        database.replicate('https://ssomnoremac.cloudant.com/demoapp', 'demoapp')
+        database.replicate('https://ssomnoremac:bookworms@ssomnoremac.cloudant.com/demoapp', 'demoapp')
       })
       .then((res) => {
         return database.getAllDocuments()
@@ -63,10 +65,13 @@ var Home = React.createClass({
   },
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        style={styles.listView} />
+      <View>
+        <SearchBar />
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
+          style={styles.listView} />
+      </View>
     )
   },
 });

@@ -66,7 +66,9 @@ var Home = React.createClass({
   render() {
     return (
       <View>
-        <SearchBar />
+        <SearchBar
+        isLoading={this.state.isLoading}
+        />
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}

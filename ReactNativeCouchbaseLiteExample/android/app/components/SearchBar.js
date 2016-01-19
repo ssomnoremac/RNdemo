@@ -24,7 +24,7 @@ var SearchBar = React.createClass({
       <View style={styles.searchBar}>
       <TouchableNativeFeedback
           background={background}
-          onPress={() => this.refs.input && this.refs.input.focus()}>
+          >
         <View>
           <Image
             source={require('image!android_search_white')}
@@ -40,7 +40,6 @@ var SearchBar = React.createClass({
         onChange={this.props.onSearchChange}
         placeholder="Search a book..."
         placeholderTextColor="rgba(255, 255, 255, 0.5)"
-        onFocus={this.props.onFocus}
         style={styles.searchBarInput}
       />
       {loadingView}

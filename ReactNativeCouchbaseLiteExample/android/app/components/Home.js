@@ -19,6 +19,7 @@ var CatalogCell = require('./CatalogCell');
 var Home = React.createClass({
   getInitialState() {
     return {
+      text: 'initial text',
       isLoading: false,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
@@ -63,12 +64,24 @@ var Home = React.createClass({
         style={styles.catalogCell} />
     );
   },
+
+  // search functionality
+  onSearchChange: function(event: Object) {
+    var filter = event.nativeEvent.text.toLowerCase();
+    this.searchMovies(filter)
+  },
+  searchMovies: function(query: string) {
+    this.setState({ text: query })
+  },
+
   render() {
     return (
       <View>
         <SearchBar
         isLoading={this.state.isLoading}
+        onSearchChange={this.onSearchChange}
         />
+        <Text>{this.state.text}</Text>
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderRow}
